@@ -8,8 +8,7 @@ class QuizApp {
         this.correctAnswers = 0;
         this.totalQuestions = 10;
         this.startTime = null;
-        this.hintsUsed = 0;
-        this.maxHints = 3;
+
         this.questions = [];
         
         this.initializeElements();
@@ -37,7 +36,6 @@ class QuizApp {
         this.questionCounter = document.getElementById('question-counter');
         this.scoreElement = document.getElementById('score');
         this.progressFill = document.querySelector('.progress-fill');
-        this.hintBtn = document.getElementById('hint-btn');
         this.skipBtn = document.getElementById('skip-btn');
         
         // 결과 화면 요소
@@ -64,7 +62,6 @@ class QuizApp {
         this.startQuizBtn.addEventListener('click', () => this.startQuiz());
         
         // 퀴즈 컨트롤
-        this.hintBtn.addEventListener('click', () => this.useHint());
         this.skipBtn.addEventListener('click', () => this.skipQuestion());
         
         // 결과 화면 버튼
@@ -79,42 +76,156 @@ class QuizApp {
                     {
                         question: "물의 화학식은 무엇인가요?",
                         answers: ["H2O", "CO2", "O2", "N2"],
-                        correct: 0,
-                        hint: "수소 2개와 산소 1개로 이루어져 있습니다."
+                        correct: 0
                     },
                     {
                         question: "태양계에서 가장 큰 행성은 무엇인가요?",
                         answers: ["지구", "화성", "목성", "토성"],
-                        correct: 2,
-                        hint: "대적점이라는 유명한 표면 특징이 있습니다."
+                        correct: 2
                     },
                     {
                         question: "광합성에 필요한 것은 무엇인가요?",
                         answers: ["산소", "이산화탄소", "질소", "수소"],
-                        correct: 1,
-                        hint: "식물이 이산화탄소를 흡수합니다."
+                        correct: 1
+                    },
+                    {
+                        question: "무지개의 색깔 수는 몇 개인가요?",
+                        answers: ["5개", "6개", "7개", "8개"],
+                        correct: 2
+                    },
+                    {
+                        question: "지구의 위성은 무엇인가요?",
+                        answers: ["태양", "달", "화성", "금성"],
+                        correct: 1
+                    },
+                    {
+                        question: "물이 끓는 온도는 몇 도인가요?",
+                        answers: ["90°C", "100°C", "110°C", "120°C"],
+                        correct: 1
+                    },
+                    {
+                        question: "인체에서 가장 큰 장기는 무엇인가요?",
+                        answers: ["심장", "간", "뇌", "피부"],
+                        correct: 3
+                    },
+                    {
+                        question: "꿀을 만드는 곤충은 무엇인가요?",
+                        answers: ["나비", "벌", "잠자리", "사슴벌레"],
+                        correct: 1
+                    },
+                    {
+                        question: "눈이 보이는 기관은 무엇인가요?",
+                        answers: ["코", "입", "귀", "눈"],
+                        correct: 3
+                    },
+                    {
+                        question: "하늘에서 별이 가장 많이 보이는 시간은 언제인가요?",
+                        answers: ["아침", "점심", "저녁", "밤"],
+                        correct: 3
                     }
                 ],
                 medium: [
                     {
                         question: "원자번호 6인 원소는 무엇인가요?",
                         answers: ["산소", "질소", "탄소", "수소"],
-                        correct: 2,
-                        hint: "유기물의 기본이 되는 원소입니다."
+                        correct: 2
                     },
                     {
                         question: "빛의 속도는 얼마인가요?",
                         answers: ["약 30만 km/s", "약 3만 km/s", "약 300만 km/s", "약 3천 km/s"],
-                        correct: 0,
-                        hint: "초당 약 30만 킬로미터입니다."
+                        correct: 0
+                    },
+                    {
+                        question: "DNA의 전체 이름은 무엇인가요?",
+                        answers: ["리보핵산", "디옥시리보핵산", "아미노산", "단백질"],
+                        correct: 1
+                    },
+                    {
+                        question: "인체의 혈액형은 몇 가지인가요?",
+                        answers: ["2가지", "3가지", "4가지", "5가지"],
+                        correct: 2
+                    },
+                    {
+                        question: "태양은 어떤 종류의 항성인가요?",
+                        answers: ["거성", "백색왜성", "황색왜성", "적색왜성"],
+                        correct: 2
+                    },
+                    {
+                        question: "전기를 발견한 과학자는 누구인가요?",
+                        answers: ["뉴턴", "에디슨", "프랭클린", "아인슈타인"],
+                        correct: 2
+                    },
+                    {
+                        question: "주기율표에서 원소 기호 'Au'는 무엇인가요?",
+                        answers: ["은", "금", "구리", "철"],
+                        correct: 1
+                    },
+                    {
+                        question: "인체의 뼈는 총 몇 개인가요?",
+                        answers: ["106개", "126개", "206개", "306개"],
+                        correct: 2
+                    },
+                    {
+                        question: "사운드의 속도는 얼마인가요?",
+                        answers: ["약 240m/s", "약 340m/s", "약 440m/s", "약 540m/s"],
+                        correct: 1
+                    },
+                    {
+                        question: "태양계에서 두 번째 행성은 무엇인가요?",
+                        answers: ["수성", "금성", "지구", "화성"],
+                        correct: 1
                     }
                 ],
                 hard: [
                     {
                         question: "양자역학에서 슈뢰딩거의 고양이 사고 실험의 목적은 무엇인가요?",
                         answers: ["고양이의 생존 실험", "중첩 상태의 모순 설명", "시간 여행 가능성", "동물 실험 윤리"],
-                        correct: 1,
-                        hint: "양자 중첩 상태의 문제점을 보여주는 사고 실험입니다."
+                        correct: 1
+                    },
+                    {
+                        question: "아인슈타인의 유명한 공식 E=mc²에서 c는 무엇을 의미하나요?",
+                        answers: ["속도", "광속", "전하", "질량"],
+                        correct: 1
+                    },
+                    {
+                        question: "PCR 기법을 개발한 과학자는 누구인가요?",
+                        answers: ["왓슨", "크릭", "멀리스", "다윈"],
+                        correct: 2
+                    },
+                    {
+                        question: "보어의 원자 모형에서 전자는 어떻게 움직인다고 했나요?",
+                        answers: ["자유롭게", "원심 궤도", "불규칙하게", "정지해있음"],
+                        correct: 1
+                    },
+                    {
+                        question: "허블 망원경이 위치한 곳은 어디인가요?",
+                        answers: ["지상", "달", "저궤도", "성운"],
+                        correct: 2
+                    },
+                    {
+                        question: "플랑크 상수는 어떤 단위를 갖나요?",
+                        answers: ["m/s", "J·s", "N/m", "W/m²"],
+                        correct: 1
+                    },
+                    {
+                        question: "입자 가속기 LHC는 어느 나라에 있나요?",
+                        answers: ["미국", "독일", "스위스", "일본"],
+                        correct: 2
+                    },
+                    {
+                        question: "RNA 스플라이싱이 일어나는 세포 기관은 무엇인가요?",
+                        answers: ["리보솜", "미토콘드리아", "핵", "골지체"],
+                        correct: 2
+                    },
+                    {
+                        question: "맥스웰 방정식이 설명하는 현상은 무엇인가요?",
+                        answers: ["중력", "전자기학", "열역학", "양자역학"],
+                        correct: 1
+                    },
+                    {
+                        question: "중성자 발견자는 누구인가요?",
+                        answers: ["러더퍼드", "채드윅", "톰슨", "보어"],
+                        correct: 1
                     }
                 ]
             },
@@ -123,30 +234,156 @@ class QuizApp {
                     {
                         question: "조선시대의 수도는 어디였나요?",
                         answers: ["부산", "대구", "한성(서울)", "광주"],
-                        correct: 2,
-                        hint: "현재 대한민국의 수도입니다."
+                        correct: 2
                     },
                     {
                         question: "세종대왕이 만든 문자는 무엇인가요?",
                         answers: ["한자", "히라가나", "한글", "한문"],
-                        correct: 2,
-                        hint: "훈민정음으로 만들어진 한국의 고유 문자입니다."
+                        correct: 2
+                    },
+                    {
+                        question: "삼국시대에 해당하지 않는 나라는?",
+                        answers: ["고구려", "백제", "신라", "발해"],
+                        correct: 3
+                    },
+                    {
+                        question: "한글이 창제된 연도는?",
+                        answers: ["1392년", "1443년", "1492년", "1592년"],
+                        correct: 1
+                    },
+                    {
+                        question: "임진왜란은 몇 년도에 일어났나요?",
+                        answers: ["1582년", "1592년", "1602년", "1612년"],
+                        correct: 1
+                    },
+                    {
+                        question: "조선을 건국한 사람은 누구인가요?",
+                        answers: ["왕건", "이성계", "정몽주", "이순신"],
+                        correct: 1
+                    },
+                    {
+                        question: "고려의 마지막 왕은 누구인가요?",
+                        answers: ["광종", "성종", "공양왕", "충렬왕"],
+                        correct: 2
+                    },
+                    {
+                        question: "한국사에서 최초의 여왕은 누구인가요?",
+                        answers: ["선덕여왕", "진덕여왕", "진흥왕", "태종"],
+                        correct: 0
+                    },
+                    {
+                        question: "세계 최초의 금속활자는 어느 나라에서 만들었나요?",
+                        answers: ["중국", "일본", "한국", "베트남"],
+                        correct: 2
+                    },
+                    {
+                        question: "이순신 장군이 사용한 거북선은 몇 층으로 되어있나요?",
+                        answers: ["1층", "2층", "3층", "4층"],
+                        correct: 1
                     }
                 ],
                 medium: [
                     {
                         question: "1894년에 일어난 농민 반란은 무엇인가요?",
                         answers: ["갑오개혁", "을미사변", "동학 농민 운동", "정미의병"],
-                        correct: 2,
-                        hint: "동학교와 관련된 농민 봉기입니다."
+                        correct: 2
+                    },
+                    {
+                        question: "을사조약이 체결된 연도는?",
+                        answers: ["1905년", "1910년", "1919년", "1945년"],
+                        correct: 0
+                    },
+                    {
+                        question: "광복이 일어난 해는?",
+                        answers: ["1942년", "1943년", "1944년", "1945년"],
+                        correct: 3
+                    },
+                    {
+                        question: "대한민국 임시정부가 수립된 곳은?",
+                        answers: ["서울", "상하이", "북경", "도쿄"],
+                        correct: 1
+                    },
+                    {
+                        question: "3.1 운동이 일어난 년도는?",
+                        answers: ["1915년", "1917년", "1919년", "1921년"],
+                        correct: 2
+                    },
+                    {
+                        question: "신라의 화백제도는 어떤 기관이었나요?",
+                        answers: ["군사기관", "의회기관", "행정기관", "사법기관"],
+                        correct: 1
+                    },
+                    {
+                        question: "고려시대 최고의 교육기관은?",
+                        answers: ["서당", "향교", "성균관", "국학"],
+                        correct: 2
+                    },
+                    {
+                        question: "발해를 건국한 사람은?",
+                        answers: ["대조영", "걸걸중상", "대무예", "대인수"],
+                        correct: 0
+                    },
+                    {
+                        question: "조선시대의 세종 시기 과학자가 아닌 사람은?",
+                        answers: ["장영실", "이순지", "정약용", "이천"],
+                        correct: 2
+                    },
+                    {
+                        question: "한일합방이 일어난 연도는?",
+                        answers: ["1908년", "1909년", "1910년", "1911년"],
+                        correct: 2
                     }
                 ],
                 hard: [
                     {
                         question: "고려시대의 과거 제도에서 최고 관등은 무엇인가요?",
                         answers: ["문과", "무과", "잡과", "승과"],
-                        correct: 0,
-                        hint: "문관을 뽑는 시험으로 최고의 관등이었습니다."
+                        correct: 0
+                    },
+                    {
+                        question: "조선시대 5군영에 해당하지 않는 것은?",
+                        answers: ["어영청", "총융청", "수어청", "금위영"],
+                        correct: 3
+                    },
+                    {
+                        question: "갑오개혁이 시작된 연도는?",
+                        answers: ["1892년", "1893년", "1894년", "1895년"],
+                        correct: 2
+                    },
+                    {
+                        question: "삼국사기의 편찬자는?",
+                        answers: ["김부식", "일연", "이승휴", "최치원"],
+                        correct: 0
+                    },
+                    {
+                        question: "조선시대 당인재를 뽑는 시험과 거의 같은 과거는?",
+                        answers: ["문과", "무과", "잡과", "생원시"],
+                        correct: 3
+                    },
+                    {
+                        question: "고려시대의 전시과는 어떤 제도인가?",
+                        answers: ["세금 제도", "토지 분배 제도", "군사 제도", "교육 제도"],
+                        correct: 1
+                    },
+                    {
+                        question: "조선의 붕당정치가 시작된 임금은?",
+                        answers: ["선조", "광해군", "인조", "영조"],
+                        correct: 0
+                    },
+                    {
+                        question: "정약용이 저술한 실학 저서는?",
+                        answers: ["성호사설", "동국문헌비고", "목민심서", "조선통사"],
+                        correct: 2
+                    },
+                    {
+                        question: "대한제국이 선포된 연도는?",
+                        answers: ["1895년", "1896년", "1897년", "1898년"],
+                        correct: 2
+                    },
+                    {
+                        question: "6.25 전쟁이 일어난 연도는?",
+                        answers: ["1948년", "1949년", "1950년", "1951년"],
+                        correct: 2
                     }
                 ]
             },
@@ -155,22 +392,104 @@ class QuizApp {
                     {
                         question: "세계에서 가장 긴 강은 무엇인가요?",
                         answers: ["아마존강", "나일강", "미시시피강", "양쯔강"],
-                        correct: 1,
-                        hint: "아프리카를 흐르는 강입니다."
+                        correct: 1
                     },
                     {
                         question: "대한민국에서 가장 높은 산은 무엇인가요?",
                         answers: ["북한산", "설악산", "한라산", "지리산"],
-                        correct: 2,
-                        hint: "제주도에 있는 화산입니다."
+                        correct: 2
+                    },
+                    {
+                        question: "대한민국의 수도는 어디인가요?",
+                        answers: ["부산", "대구", "서울", "광주"],
+                        correct: 2
+                    },
+                    {
+                        question: "일본의 수도는 어디인가요?",
+                        answers: ["오사카", "도쿄", "교토", "나고야"],
+                        correct: 1
+                    },
+                    {
+                        question: "세계에서 가장 넓은 대양은?",
+                        answers: ["대서양", "인도양", "북극해", "태평양"],
+                        correct: 3
+                    },
+                    {
+                        question: "한반도는 어느 반도에 속하나요?",
+                        answers: ["인도차이나반도", "아라비아반도", "발레아레스반도", "자체반도"],
+                        correct: 3
+                    },
+                    {
+                        question: "중국의 수도는 어디인가요?",
+                        answers: ["상하이", "북경", "홍콩", "천진"],
+                        correct: 1
+                    },
+                    {
+                        question: "미국의 수도는 어디인가요?",
+                        answers: ["뉴욕", "로스앤젤레스", "워싱턴 D.C.", "시카고"],
+                        correct: 2
+                    },
+                    {
+                        question: "세계에서 가장 작은 대륙은?",
+                        answers: ["아시아", "유럽", "오세아니아", "남극"],
+                        correct: 2
+                    },
+                    {
+                        question: "강원도는 어느 지역에 있나요?",
+                        answers: ["남부", "중부", "북부", "제주"],
+                        correct: 1
                     }
                 ],
                 medium: [
                     {
                         question: "사하라 사막은 어느 대륙에 있나요?",
                         answers: ["아시아", "아프리카", "오스트레일리아", "남아메리카"],
-                        correct: 1,
-                        hint: "세계에서 가장 큰 사막입니다."
+                        correct: 1
+                    },
+                    {
+                        question: "에베레스트 산은 어느 국가에 있나요?",
+                        answers: ["인도", "중국/네팔", "파키스탄", "티베트"],
+                        correct: 1
+                    },
+                    {
+                        question: "리오그란데 강은 어느 두 국가의 국경을 이루나요?",
+                        answers: ["미국/캐나다", "미국/멕시코", "브라질/아르헨티나", "프랑스/스페인"],
+                        correct: 1
+                    },
+                    {
+                        question: "세계에서 가장 깊은 바다는?",
+                        answers: ["태평양", "대서양", "인도양", "북극해"],
+                        correct: 0
+                    },
+                    {
+                        question: "지중해는 어느 대륙들 사이에 있나요?",
+                        answers: ["아시아/유럽", "유럽/아프리카", "아프리카/아시아", "남미/북미"],
+                        correct: 1
+                    },
+                    {
+                        question: "세계에서 가장 긴 해안선을 가진 국가는?",
+                        answers: ["미국", "러시아", "캐나다", "호주"],
+                        correct: 2
+                    },
+                    {
+                        question: "알프스 산맥은 어느 대륙에 있나요?",
+                        answers: ["아시아", "아프리카", "유럽", "남아메리카"],
+                        correct: 2
+                    },
+                    {
+                        question: "나일 강의 발원지는 어디인가요?",
+                        answers: ["콩고", "케냐", "에티오피아", "이집트"],
+                        correct: 2
+                    },
+                    {
+                        question: "세계에서 가장 큰 섬은?",
+                        answers: ["영국", "일본", "그린란드", "뉴기니"],
+                        correct: 2
+                    },
+                    {
+                        question: "흑해는 어느 대륙에 인접해 있나요?",
+                        answers: ["아시아와 유럽", "아프리카와 아시아", "유럽과 아프리카", "남미와 북미"],
+                        correct: 0
                     }
                 ],
                 hard: [
@@ -349,7 +668,6 @@ class QuizApp {
         this.currentQuestionIndex = 0;
         this.score = 0;
         this.correctAnswers = 0;
-        this.hintsUsed = 0;
         this.startTime = Date.now();
         
         // 화면 전환
@@ -389,7 +707,6 @@ class QuizApp {
         this.updateProgress();
         
         // 버튼 상태 초기화
-        this.hintBtn.disabled = this.hintsUsed >= this.maxHints;
         this.skipBtn.disabled = false;
     }
     
@@ -415,7 +732,6 @@ class QuizApp {
         
         // 버튼 비활성화
         buttons.forEach(btn => btn.disabled = true);
-        this.hintBtn.disabled = true;
         this.skipBtn.disabled = true;
         
         // 점수 계산
@@ -432,14 +748,7 @@ class QuizApp {
         }, 1500);
     }
     
-    useHint() {
-        if (this.hintsUsed >= this.maxHints) return;
-        
-        const question = this.questions[this.currentQuestionIndex];
-        alert(`힌트: ${question.hint}`);
-        this.hintsUsed++;
-        this.hintBtn.disabled = this.hintsUsed >= this.maxHints;
-    }
+
     
     skipQuestion() {
         this.nextQuestion();
